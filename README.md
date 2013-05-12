@@ -13,16 +13,16 @@ Compile the code with `lda.make` function in Matlab before using the package.
 Here is a simple usage example:
 
     corpus = lda.load_corpus('ap/ap.dat');
-    [model, assignment] = lda.estimate(corpus, 'seeded', ...
-                                       'num_topics', 100, ...
-                                       'initial_alpha', 0.1);
-    [likelihoods, assignment2] = lda.infer(corpus, model);
+    [model, distribution] = lda.estimate(corpus, 'seeded', ...
+                                         'num_topics', 100, ...
+                                         'initial_alpha', 0.1);
+    [likelihoods, distribution] = lda.infer(corpus, model);
 
 API
 ---
 
-    estimate     Run the EM algorithm to estimate a topic model and assignment.
-    infer        Run inference on a new samples using a learned LDA model.
+    estimate     Run the EM algorithm to estimate a topic model and its distribution.
+    infer        Run inference on new samples using a learned LDA model.
     load_corpus  Load dataset in lda-c file format into a sparse matrix.
     make         Build a mex file.
     save_corpus  Save dataset in lda-c file format from a sparse matrix.

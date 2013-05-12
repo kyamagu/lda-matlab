@@ -748,6 +748,10 @@ lda_corpus* read_data(const char* data_filename)
     c->num_terms = 0;
     c->num_docs = 0;
     fileptr = fopen(data_filename, "r");
+    if (fileptr == NULL) {
+        perror(data_filename);
+        return NULL;
+    }
     nd = 0; nw = 0;
     while ((fscanf(fileptr, "%10d", &length) != EOF))
     {

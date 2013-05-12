@@ -1,7 +1,8 @@
-function [likelihoods, assignment] = infer(corpus, model, varargin)
-%INFER Run inference on a new samples using a learned LDA model.
+function [likelihoods, distribution] = infer(corpus, model, varargin)
+%INFER Run inference on new samples using a learned LDA model.
 %
-%    [likelihoods, assignment] = lda.infer(corpus, model, 'param1', value1, ...)
+%    [likelihoods, distribution] = lda.infer(corpus, model, ...)
+%    [...] = lda.infer(..., 'param1', value1, ...)
 %
 % CORPUS is a sparse row vectors of word frequencies. MODEL is a previously
 % trained LDA model in a struct given by lda.estimate(). The function takes
@@ -28,5 +29,5 @@ function [likelihoods, assignment] = infer(corpus, model, varargin)
 %
 % See also lda.estimate
   options = get_options_(varargin{:});
-  [likelihoods, assignment] = mex_function_(mfilename, corpus, model, options);
+  [likelihoods, distribution] = mex_function_(mfilename, corpus, model, options);
 end

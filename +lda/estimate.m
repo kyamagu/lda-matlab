@@ -1,7 +1,7 @@
-function [model, assignment] = estimate(corpus, model, varargin)
-%ESTIMATE Run the EM algorithm to estimate a topic model and assignment.
+function [model, distribution] = estimate(corpus, model, varargin)
+%ESTIMATE Run the EM algorithm to estimate a topic model and its distribution.
 %
-%    [model, assignment] = lda.estimate(corpus, model, 'param1', value1, ...)
+%    [model, distribution] = lda.estimate(corpus, model, 'param1', value1, ...)
 %
 % CORPUS is a sparse row vectors of word frequencies. MODEL can be 'seeded',
 % 'random', or a previously trained LDA model in a struct. The function takes
@@ -48,5 +48,5 @@ function [model, assignment] = estimate(corpus, model, varargin)
 %
 % See also lda.estimate
   options = get_options_(varargin{:});
-  [model, assignment] = mex_function_(mfilename, corpus, model, options);
+  [model, distribution] = mex_function_(mfilename, corpus, model, options);
 end

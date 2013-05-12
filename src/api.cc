@@ -162,7 +162,7 @@ mxArray* WriteModelToMxArray(const lda_model* model) {
   return output.getMutable();
 }
 
-// Write topic assignment into mxArray.
+// Write topic gamma into mxArray.
 mxArray* WriteGammaToMxArray(const vector<vector<double> >& var_gamma) {
   int rows = var_gamma.size();
   int columns = (var_gamma.empty()) ? 0 : var_gamma[0].size();
@@ -211,7 +211,7 @@ void InitializeModel(const mxArray* model_input,
 void RunEM(const mxArray* model_input,
            lda_corpus* corpus,
            mxArray** model_output,
-           mxArray** assignment) {
+           mxArray** gamma) {
   // Allocate variational parameters.
   lda_settings* settings = get_settings();
   vector<vector<double> > var_gamma(corpus->num_docs,
@@ -259,8 +259,8 @@ void RunEM(const mxArray* model_input,
   // Prepare output.
   if (model_output != NULL)
     *model_output = WriteModelToMxArray(model);
-  if (assignment != NULL)
-    *assignment = WriteGammaToMxArray(var_gamma);
+  if (gamma != NULL)
+    *gamma = WriteGammaToMxArray(var_gamma);
   // Cleanup.
   free_lda_model(model);
   free_lda_suffstats(ss);
@@ -272,8 +272,8 @@ void RunEM(const mxArray* model_input,
 // Run inference with a learned model.
 void RunInference(const mxArray* model_input,
                   lda_corpus* corpus,
-                  mxArray** likelihood_values,
-                  mxArray** assignment) {
+                  mxArray** gamma,
+                  mxArray** likelihood_values) {
   lda_model* model = ReadModelFromMxArray(model_input);
   vector<vector<double> > var_gamma(corpus->num_docs,
                                     vector<double>(model->num_topics));
@@ -293,8 +293,8 @@ void RunInference(const mxArray* model_input,
     *likelihood_values = mxCreateDoubleMatrix(likelihoods.size(), 1, mxREAL);
     copy(likelihoods.begin(), likelihoods.end(), mxGetPr(*likelihood_values));
   }
-  if (assignment != NULL)
-    *assignment = WriteGammaToMxArray(var_gamma);
+  if (gamma != NULL)
+    *gamma = WriteGammaToMxArray(var_gamma);
 }
 
 // Main entry for corpus = load_corpus(filename).
@@ -309,7 +309,7 @@ MEX_FUNCTION(load_corpus) (int nlhs,
   free_data(corpus);
 }
 
-// Main entry for [model, assignment] = estimate(corpus, model, options).
+// Main entry for [model, distribution] = estimate(corpus, model, options).
 MEX_FUNCTION(estimate) (int nlhs,
                         mxArray* plhs[],
                         int nrhs,
@@ -326,7 +326,7 @@ MEX_FUNCTION(estimate) (int nlhs,
   free_data(corpus);
 }
 
-// Main entry for [likelihoods, assignment] = infer(corpus, model, options).
+// Main entry for [likelihoods, distribution] = infer(corpus, model, options).
 MEX_FUNCTION(infer) (int nlhs,
                      mxArray* plhs[],
                      int nrhs,

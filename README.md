@@ -6,11 +6,10 @@ Dirichlet Allocation written in C.
 
 http://www.cs.princeton.edu/~blei/lda-c/
 
-The package includes a few API functions
-that internally calls the original C implementation by mex interface.
+The package includes a few API functions that internally calls the original C
+implementation by mex interface.
 
 Compile the code with `lda.make` function in Matlab before using the package.
-
 Here is a simple usage example:
 
     corpus = lda.load_corpus('ap/ap.dat');
@@ -19,4 +18,16 @@ Here is a simple usage example:
                                        'initial_alpha', 0.1);
     [likelihoods, assignment2] = lda.infer(corpus, model);
 
-The code is under LGPL v2.1 license.
+API
+---
+
+    estimate     Run the EM algorithm to estimate a topic model and assignment.
+    infer        Run inference on a new samples using a learned LDA model.
+    load_corpus  Load dataset in lda-c file format into a sparse matrix.
+    make         Build a mex file.
+    save_corpus  Save dataset in lda-c file format from a sparse matrix.
+
+License
+-------
+
+The code may be redistributed under LGPL v2.1 license.

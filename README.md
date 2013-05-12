@@ -18,6 +18,8 @@ Here is a simple usage example:
                                          'initial_alpha', 0.1);
     [likelihoods, distribution] = lda.infer(corpus, model);
 
+The same example is in the `main.m` demo function.
+
 API
 ---
 

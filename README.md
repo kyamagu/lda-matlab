@@ -9,6 +9,8 @@ http://www.cs.princeton.edu/~blei/lda-c/
 The package includes a few API functions
 that internally calls the original C implementation by mex interface.
 
+Compile the code with `lda.make` function in Matlab before using the package.
+
 Here is a simple usage example:
 
     corpus = lda.load_corpus('ap/ap.dat');

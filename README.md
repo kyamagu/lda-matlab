@@ -23,6 +23,8 @@ The same example is in the `main.m` demo function.
 API
 ---
 
+All functions are scoped under `lda` namespace.
+
     estimate     Run the EM algorithm to estimate a topic model and its distribution.
     infer        Run inference on new samples using a learned LDA model.
     load_corpus  Load dataset in lda-c file format into a sparse matrix.

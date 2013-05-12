@@ -10,6 +10,6 @@ function main
                                      'num_topics', 32, ...
                                      'initial_alpha', 0.1);
   % Compute topic distribution with a trained model.
-  [likelihoods, distribution2] = lda.infer(corpus, model);
+  [distribution2, likelihoods] = lda.infer(corpus, model);
 
 end

@@ -59,8 +59,8 @@ void ReadSettings(const mxArray* mxarray) {
 
 // Read data into corpus. Call free_data() after use.
 lda_corpus* ReadCorpusFromMxArray(const mxArray* input) {
-  if (!mxIsSparse(input))
-    ERROR("Input data must be a sparse array.");
+  if (!mxIsSparse(input) || !mxIsDouble(input))
+    ERROR("Input data must be a sparse double array.");
   lda_corpus* corpus = (lda_corpus*)malloc(sizeof(corpus));
   CHECK_NOTNULL(corpus);
   // Get values from mxArray.
@@ -200,6 +200,8 @@ void InitializeModel(const mxArray* model_input,
       lda_mle(*model, *ss, 0);
       (*model)->alpha = settings->INITIAL_ALPHA;
     }
+    else
+      ERROR("Invalid model initialization: %s", initialization_method.c_str());
   }
   else {
     *model = ReadModelFromMxArray(model_input);

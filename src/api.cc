@@ -45,8 +45,8 @@ void ReadSettings(const mxArray* mxarray) {
     settings->EM_MAX_ITER = config.at("em_max_iter").toInt();
   if (config.isField("em_convergence"))
     settings->EM_CONVERGED = config.at("em_convergence").toDouble();
-  if (config.isField("alpha_fixed"))
-    settings->ESTIMATE_ALPHA = config.at("alpha_fixed").toInt();
+  if (config.isField("estimate_alpha"))
+    settings->ESTIMATE_ALPHA = config.at("estimate_alpha").toInt();
   if (config.isField("initial_alpha"))
     settings->INITIAL_ALPHA = config.at("initial_alpha").toDouble();
   if (config.isField("num_topics"))

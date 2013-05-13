@@ -187,7 +187,7 @@ void InitializeModel(const mxArray* model_input,
   if (mxIsChar(model_input)) {
     string initialization_method = MxArray(model_input).toString();
     if (get_settings()->VERBOSE)
-      mexPrintf("Initializing by '%s'", initialization_method.c_str());
+      mexPrintf("%s initialization\n", initialization_method.c_str());
     if (initialization_method == "seeded") {
       *model = new_lda_model(corpus->num_terms, settings->NTOPICS);
       *ss = new_lda_suffstats(*model);

@@ -3,48 +3,57 @@ function [model, distribution] = estimate(corpus, model, varargin)
 %
 %    [model, distribution] = lda.estimate(corpus, model, 'param1', value1, ...)
 %
-% CORPUS is a sparse row vectors of word frequencies. MODEL can be 'seeded',
-% 'random', or a previously trained LDA model in a struct. The function takes
-% following options.
+% CORPUS is a sparse row vectors of word frequencies. CORPUS(i, j) is a count
+% of word j in document i.
 %
-% # OPTIONS
+% MODEL can be 'seeded', 'random', or a previously trained LDA model in a
+% struct. The function takes following options. The resulting MODEL is a scalar
+% struct of learned topics. The 'alpha' field is a scalar value of
+% hyperparameter, and 'beta' is column vectors of topic distribution for each
+% word.
 %
-% _num_topics_ [8]
+% DISTRIBUTION is row vectors of topic distribution for each document. Each row
+% contains weights for each topic.
 %
-% Number of topics.
+% OPTIONS
+% -------
 %
-% _var_max_iter_ [-1]
+% num_topics [8]
 %
-% Maximum number of iterations in variational inference. Default doesn't limit
-% the iteration by number.
+%  Number of topics.
 %
-% _var_converged_ [1e-6]
+% var_max_iter [-1]
 %
-% Tolerance value of iterations in the variational inference.
+%  Maximum number of iterations in variational inference. Default doesn't limit
+%  the iteration by number.
 %
-% _em_max_iter_ [100]
+% var_converged [1e-6]
 %
-% Maximum number of iterations in the EM algorithm.
+%  Tolerance value of iterations in the variational inference.
 %
-% _em_convergence_ [1e-4]
+% em_max_iter [100]
 %
-% Tolerance value of iterations in the EM algorithm.
+%  Maximum number of iterations in the EM algorithm.
 %
-% _estimate_alpha_ [true]
+% em_convergence [1e-4]
 %
-% Flag to enable alpha estimation.
+%  Tolerance value of iterations in the EM algorithm.
 %
-% _initial_alpha_ [0.5]
+% estimate_alpha [true]
 %
-% Initial alpha value.
+%  Flag to enable alpha estimation.
 %
-% _random_seed_ [4357]
+% initial_alpha [0.5]
 %
-% Seed number for random number generator.
+%  Initial alpha value.
 %
-% _verbose_ [true]
+% random_seed [4357]
 %
-% Verbosity of message printout.
+%  Seed number for random number generator.
+%
+% verbose [true]
+%
+%  Verbosity of message printout.
 %
 % See also lda.estimate
   options = get_options_(varargin{:});

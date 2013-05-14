@@ -339,7 +339,6 @@ MEX_FUNCTION(infer) (int nlhs,
   CheckOutputArguments(0, 2, nlhs);
   lda_corpus* corpus = ReadCorpusFromMxArray(prhs[0]);
   ReadSettings(prhs[2]);
-  ResetRandomNumber();
   RunInference(prhs[1],
                corpus,
                (nlhs < 1) ? NULL : &plhs[0],

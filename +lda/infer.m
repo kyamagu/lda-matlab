@@ -8,24 +8,25 @@ function [distribution, likelihoods] = infer(corpus, model, varargin)
 % trained LDA model in a struct given by lda.estimate(). The function takes
 % following options.
 %
-% # OPTIONS
+% DISTRIBUTION is row vectors of topic distribution for each document. Each row
+% contains weights for each topic. LIKELIHOODS is a vector of document
+% likelihoods.
 %
-% _var_max_iter_ [-1]
+% OPTIONS
+% -------
 %
-% Maximum number of iterations in variational inference. Default doesn't limit
-% the iteration by number.
+% var_max_iter [-1]
 %
-% _var_converged_ [1e-6]
+%  Maximum number of iterations in variational inference. Default doesn't
+%  limit the iteration by number.
 %
-% Tolerance value of iterations in the variational inference.
+% var_converged [1e-6]
 %
-% _random_seed_ [4357]
+%  Tolerance value of iterations in the variational inference.
 %
-% Seed number for random number generator.
+% verbose [true]
 %
-% _verbose_ [true]
-%
-% Verbosity of message printout.
+%  Verbosity of message printout.
 %
 % See also lda.estimate
   options = get_options_(varargin{:});

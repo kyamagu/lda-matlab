@@ -28,6 +28,7 @@
 #include <sys/types.h>
 
 #ifdef MATLAB_MEX_FILE
+int mexPrintf(const char *message, ...);
 #define printf if (settings_.VERBOSE) mexPrintf
 #endif
 

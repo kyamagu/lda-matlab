@@ -8,6 +8,9 @@ function make(varargin)
 %
 % See also mex
   package_dir = fileparts(fileparts(mfilename('fullpath')));
+  if isunix()
+    varargin = [varargin, 'CFLAGS="\$CFLAGS -std=c99"']; % To use C++ comments.
+  end
   cmd = sprintf(...
     'mex -largeArrayDims%s -outdir %s -output mex_function_%s',...
     find_source_files(fullfile(package_dir, 'src')),...

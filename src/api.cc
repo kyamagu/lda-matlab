@@ -299,6 +299,7 @@ void RunInference(const mxArray* model_input,
   }
   if (gamma != NULL)
     *gamma = WriteGammaToMxArray(var_gamma);
+  free_lda_model(model);
 }
 
 // Main entry for corpus = load_corpus(filename).

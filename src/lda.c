@@ -739,19 +739,21 @@ void infer(const char* model_root, const char* save, lda_corpus* corpus)
 
 lda_corpus* read_data(const char* data_filename)
 {
-    FILE *fileptr;
+    FILE *fileptr = NULL;
     int length, count, word, n, nd, nw;
     lda_corpus* c;
 
     printf("reading data from %s\n", data_filename);
     c = malloc(sizeof(lda_corpus));
+    if (c == NULL)
+        return NULL;
     c->docs = 0;
     c->num_terms = 0;
     c->num_docs = 0;
     fileptr = fopen(data_filename, "r");
     if (fileptr == NULL) {
         perror(data_filename);
-        return NULL;
+        goto error;
     }
     nd = 0; nw = 0;
     while ((fscanf(fileptr, "%10d", &length) != EOF))
@@ -763,7 +765,10 @@ lda_corpus* read_data(const char* data_filename)
         c->docs[nd].counts = malloc(sizeof(int)*length);
         for (n = 0; n < length; n++)
         {
-            fscanf(fileptr, "%10d:%10d", &word, &count);
+            if (fscanf(fileptr, "%10d:%10d", &word, &count) != 2) {
+                perror("invalid file format");
+                goto error;
+            }
             word = word - OFFSET;
             c->docs[nd].words[n] = word;
             c->docs[nd].counts[n] = count;
@@ -772,12 +777,26 @@ lda_corpus* read_data(const char* data_filename)
         }
         nd++;
     }
+    if (feof(fileptr)) {
+        perror("invalid file format"); // TODO: free
+        goto error;
+    }
     fclose(fileptr);
     c->num_docs = nd;
     c->num_terms = nw;
     printf("number of docs    : %d\n", nd);
     printf("number of terms   : %d\n", nw);
     return(c);
+error:
+    for (n = 0; n < nd; n++) {
+        free(c->docs[n].words);
+        free(c->docs[n].counts);
+    }
+    free(c->docs);
+    free(c);
+    if (fileptr)
+        fclose(fileptr);
+    return NULL;
 }
 
 int max_corpus_length(const lda_corpus* c)

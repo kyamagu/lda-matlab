@@ -4,7 +4,7 @@ Latent Dirichlet Allocation for Matlab
 This is a Matlab version of the David Blei's original implementation of Latent
 Dirichlet Allocation written in C.
 
-http://www.cs.princeton.edu/~blei/lda-c/
+http://www.cs.columbia.edu/~blei/lda-c/
 
 The package includes a few API functions that internally calls the original C
 implementation by mex interface.
